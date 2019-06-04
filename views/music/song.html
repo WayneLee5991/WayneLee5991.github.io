@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="renderer" content="webkit">
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link href="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.css" rel="stylesheet" />
+		<link rel="stylesheet" href="../../layuiadmin/style/header.css" />
+		<style>
+			body {
+				background-color: #eeeeee;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<a href="../index.html" id="logo-a">
+					<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=872221839,891776347&fm=179&app=42&f=JPEG?w=55&h=56" class="logo-img" />
+					<span class="logo-font">网易云音乐</span>
+				</a>
+				<ul class="layui-nav layui-layout-left">
+				  <li class="layui-nav-item"><a href="">个人中心</a></li>
+				</ul>
+				<div class="component">
+					<input type="text" class="layui-input search-key" placeholder="请输入搜索关键字"/>
+				</div>
+			    <ul class="layui-nav layui-layout-right">
+			      	<li class="layui-nav-item" style="margin-right: 500px;">
+			        	<a href="javascript:;">登录</a>
+			      	</li>
+			    </ul>
+			</div>
+		  
+		  	<div class="layui-main">
+		  		<div class="layui-fluid">
+				    <div class="layui-card">
+					    <div class="layui-card-body">
+					    	<div id="aplayer"></div>
+							<div id="bplayer"></div>
+					    </div>
+				    </div>
+				</div>
+
+				
+		  	</div>
+		  
+		 	<div class="layui-footer" style="left: 0px;text-align: center;border-top: 1px solid black;">
+				Copyright © 2018-2019 WayneLee All Rights Reserved 鲁ICP备18043056号-2
+		  	</div>
+		</div>
+
+		
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script src="https://cdn.bootcss.com/aplayer/1.10.1/APlayer.min.js"></script>
+		<script src="https://cdn.bootcss.com/axios/0.18.0/axios.min.js"></script>
+		<script>
+		  	layui.config({
+		    	base: '../../layuiadmin/' //静态资源所在路径
+		  	}).extend({
+		    	index: 'lib/index' //主入口模块
+		  	}).use(['index','jquery','form','table'],function(){
+		  		var $ = layui.jquery
+		  		,form = layui.form
+		  		,table = layui.table
+		  		,setter = layui.setter
+		  		,admin = layui.admin;
+		  		
+		  		//读取url参数
+		  		var id = setter.getUrlParam("id");
+		  		if(id !== null){
+		  			initSong(id);
+		  		}
+		  		
+		  		function initSong(id){
+		  			admin.req({
+		  				url:setter.musicUrl + 'netease/song'
+		  				,data:{
+		  					id:id
+			    			,format: 1
+		  				}
+		  				,done:function(res){
+						    var code = res.code;
+						    var data = res.data[0];
+						    if(code === 200){
+						    	var option = {
+						    		container: document.getElementById('aplayer')
+						    		,lrcType:3
+								    ,audio: [{
+								        name: data.name,
+								        artist: data.singer,
+								        url: data.url,
+								        cover: data.pic,
+								        lrc: data.lrc
+									}]
+									//,fixed: true //开启吸底模式
+									//,mini: true //开启mini模式
+									,autoplay: false //开启自动播放
+						    	};
+						    	const ap = new APlayer(option);
+						    	
+							}
+		  				}
+		  			})
+		  		}
+		  		
+		  	});
+		</script>
+	</body>
+</html>

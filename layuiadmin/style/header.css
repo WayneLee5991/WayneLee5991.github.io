@@ -1,0 +1,30 @@
+#logo-a {
+	color: white;
+	position: absolute;
+	top: 16px;
+    left: 200px;
+}
+.logo-img {
+	width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+.logo-font {
+	margin-left: 10px;
+}
+.layui-header .layui-layout-left {
+	margin-left: 150px;
+}
+.component {
+	position: absolute;
+    width: 160px;
+    top: 16px;
+    left: 500px;
+}
+.component .layui-input {
+	width: 200px;
+	height: 30px;
+    padding-left: 12px;
+    border: none 0;
+    font-size: 12px;
+}

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<meta name="renderer" content="webkit">
+  		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  		<link rel="stylesheet" href="../../layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="../../layuiadmin/style/header.css" />
+		<style>
+			body {
+				background-color: #eeeeee;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="layui-layout layui-layout-admin">
+			<div class="layui-header">
+				<a href="../index.html" id="logo-a">
+					<img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=872221839,891776347&fm=179&app=42&f=JPEG?w=55&h=56" class="logo-img" />
+					<span class="logo-font">网易云音乐</span>
+				</a>
+				<ul class="layui-nav layui-layout-left">
+				  <li class="layui-nav-item"><a href="">个人中心</a></li>
+				</ul>
+				<div class="component">
+					<input type="text" class="layui-input search-key" placeholder="请输入搜索关键字"/>
+				</div>
+			    <ul class="layui-nav layui-layout-right">
+			      	<li class="layui-nav-item" style="margin-right: 500px;">
+			        	<a href="javascript:;">登录</a>
+			      	</li>
+			    </ul>
+			</div>
+		  
+		  	<div class="layui-main">
+		  		<div class="layui-fluid">
+				    <div class="layui-card">
+					    <div class="layui-card-body">
+					    	
+					    	<div class="layui-form" style="text-align: center;">
+						        <div class="layui-form-item">
+						          <div class="layui-inline">
+						            <div class="layui-input-inline">
+						              <input type="text" name="keyword" lay-verify="required" placeholder="请输入搜索关键词" autocomplete="off" class="layui-input search-key">
+						            </div>
+						          </div>
+						          <div class="layui-inline">
+						            <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-music-search">
+						              <i class="layui-icon layui-icon-search"></i>
+						            </button>
+						          </div>
+						        </div>
+						    </div>
+					    	
+					        <div class="layui-tab layui-tab-brief">
+						  		<ul class="layui-tab-title">
+								    <li class="layui-this">单曲</li>
+								    <li>歌手</li>
+								    <li>专辑</li>
+								    <li>视频</li>
+								    <li>歌词</li>
+								    <li>歌单</li>
+								    <li>主播电台</li>
+								    <li>用户</li>
+								</ul>
+								<div class="layui-tab-content">
+								    <div class="layui-tab-item layui-show">
+								    	<table id="song" lay-filter="song"></table>
+								    </div>
+								    <div class="layui-tab-item">内容2</div>
+								    <div class="layui-tab-item">内容3</div>
+								    <div class="layui-tab-item">内容4</div>
+								    <div class="layui-tab-item">内容5</div>
+								    <div class="layui-tab-item">内容6</div>
+								    <div class="layui-tab-item">内容7</div>
+								    <div class="layui-tab-item">内容8</div>
+								</div>
+							</div>
+					    </div>
+				    </div>
+				</div>
+
+				
+		  	</div>
+		  
+			<div class="layui-footer" style="left: 0px;text-align: center;border-top: 1px solid black;">
+				Copyright © 2018-2019 WayneLee All Rights Reserved 鲁ICP备18043056号-2
+		  	</div>
+		</div>
+
+		
+		<script src="../../layuiadmin/layui/layui.js"></script>
+		<script>
+		  	layui.config({
+		    	base: '../../layuiadmin/' //静态资源所在路径
+		  	}).extend({
+		    	index: 'lib/index' //主入口模块
+		  	}).use(['index','jquery','form','table'],function(){
+		  		var $ = layui.jquery
+		  		,form = layui.form
+		  		,table = layui.table
+		  		,setter = layui.setter
+		  		,admin = layui.admin;
+		  		
+		  		//读取url参数
+		  		var keyword = setter.getUrlParam("k");
+		  		if(keyword !== null){
+		  			$(".search-key").val(keyword);
+		  			initResult(keyword,"song");
+		  		}
+		  		//搜索提交
+		  		form.on('submit(LAY-app-music-search)', function(data){
+					var keyword = data.field.keyword;
+					initResult(keyword,"song");
+					
+					return false;
+				});
+		  		
+		  		function initResult(keyword,type){
+		  			table.render({
+					    elem: '#song'
+					    ,skin: 'nob' //行边框风格
+  						,even: true //开启隔行背景
+					    ,url: setter.musicUrl +  "netease/search"//数据接口
+					    ,where: {
+					    	keyword: keyword
+				      		,type: type
+				      		,pageSize: 10
+				      		,page: 0
+				      		,format: 1
+					    }
+					    ,parseData: function(res){ //res 即为原始返回的数据
+						    return {
+						      "code": res.code, //解析接口状态
+						      "msg": res.msg, //解析提示文本
+						     // "count": 100, //解析数据长度
+						      "data": res.data //解析数据列表
+						    };
+						}
+					    ,response: {
+						    statusCode: 200 //规定成功的状态码，默认：0
+						} 
+					    ,cols: [[ //表头
+					      {field: 'name', title: '歌曲'}
+					      ,{field: 'singer', title: '歌手'}
+					    ]]
+					});
+		  		}
+		  		
+		  		table.on('row(song)', function(obj){
+					var data = obj.data;
+					var id = data.id;
+					window.location.href = '../music/song.html?id='+id;
+				});
+ 
+		  	});
+		</script>
+	</body>
+</html>
