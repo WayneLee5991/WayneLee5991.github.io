@@ -1,12 +1,9 @@
 /**
-
  @Name：layuiAdmin iframe版全局配置
  @Author：贤心
  @Site：http://www.layui.com/admin/
  @License：LPPL（layui付费产品协议）
-    
  */
- 
 layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
   exports('setter', {
     container: 'LAY_app' //容器ID
@@ -27,8 +24,21 @@ layui.define(['laytpl', 'layer', 'element', 'util'], function(exports){
       tokenName: false //自动携带 token 的字段名（如：access_token）。可设置 false 不携带。
     }
     
+    //音乐请求网址
     ,musicUrl: "https://v1.itooi.cn/"
+    ,allMusicUrl: "https://api.hibai.cn/api/index/index"
     
+    //不同平台的路径
+    ,NETEASE: "netease/" //网易云音乐
+	,TENCENT: "tencent/" //qq音乐
+	,KUGOU: "kugou/"     //酷狗音乐
+	,KUWO: "kuwo/"       //酷我音乐
+	,MIGU: "migu/"       //咪咕音乐
+	,BAIDU: 'baidu/'     //百度音乐
+	
+	/**
+	 * 获取URL参数
+	 */
     ,getUrlParam: function (name) {
 	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
 	    var r = window.location.search.substr(1).match(reg); //匹配目标参数

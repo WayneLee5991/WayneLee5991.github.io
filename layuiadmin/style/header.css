@@ -1,4 +1,26 @@
-#logo-a {
+/*修改导航下划线颜色*/
+.layui-nav .layui-this:after, .layui-nav-bar, .layui-nav-tree .layui-nav-itemed:after {
+	background-color: #393D49;
+}
+.layui-header a{
+	color: white;
+}*/
+.layui-header a:link {color:white} *//* 未访问的链接 */
+.layui-header a:visited {color:white}	/* 已访问的链接 */
+.layui-header a:hover {color:white}	/* 鼠标移动到链接上 */
+.layui-header a:active {color:white}	/* 选定的链接，即鼠标按下去的时候不松开显示的状态 */
+
+			
+.menu_block {
+	display: none;
+	width: 50px;
+	color: white;
+	position: absolute;
+	top: 18px;
+	right:0;
+}
+/*logo*/
+.logo-a {
 	color: white;
 	position: absolute;
 	top: 16px;
@@ -12,19 +34,91 @@
 .logo-font {
 	margin-left: 10px;
 }
-.layui-header .layui-layout-left {
-	margin-left: 150px;
-}
-.component {
+/*导航*/
+.navigation {
+	padding: 0 20px;
 	position: absolute;
-    width: 160px;
-    top: 16px;
-    left: 500px;
+    left: 400px;
 }
+.nav-item {
+	display: inline-block;
+	line-height: 60px;
+	padding: 0 30px;
+}
+/*搜索框*/
 .component .layui-input {
 	width: 200px;
 	height: 30px;
     padding-left: 12px;
     border: none 0;
     font-size: 12px;
+}
+.component {
+	position: absolute;
+    width: 160px;
+    top: 16px;
+    left: 800px;
+}
+/*手机屏幕*/
+@media screen and (max-width: 768px){
+	.logo-a {
+		position: absolute;
+		top: 16px;
+	    left: 10px;
+	}
+	.menu_block {
+	display: block;}
+	.navigation {
+		display: none;
+		width: 100%;
+		background-color: white;
+		padding: 0 10px;
+		position: absolute;
+		top: 60px;
+	    left:0;
+	}
+	.nav-item {
+		display:block;
+		color: black;
+		border-bottom: 1px solid #e8e9e7;
+		line-height: 50px;
+		padding: 0 20px;
+	}
+	.nav-item a {
+		color: black;
+	}
+	.component .layui-input {
+		width: 120px;
+		height: 30px;
+	    padding-left: 12px;
+	    border: none 0;
+	    font-size: 12px;
+	}
+	.component {
+		position: absolute;
+	    width: 160px;
+	    top: 16px;
+	    left: 150px;
+	}
+	.search {
+		display: block;
+	}
+}
+   
+/*ipad */
+@media screen and (max-width: 992px) and (min-width: 768px) {
+	.component {
+		width: 160px;
+		position: absolute;
+	    top: 16px;
+	    left: 300px;
+	}
+}
+/*ipad pro*/
+@media screen and (max-width: 1200px) and (min-width: 992px) {
+	.nav-item {
+		display: inline-block;
+		line-height: 60px;
+		padding: 0 30px;
+	}
 }
